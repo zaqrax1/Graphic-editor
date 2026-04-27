@@ -1,0 +1,140 @@
+object Form1: TForm1
+  Left = 2041
+  Height = 600
+  Top = 268
+  Width = 800
+  Caption = 'Графический редактор'
+  ClientHeight = 600
+  ClientWidth = 800
+  Menu = MainMenu1
+  Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
+  OnCreate = FormCreate
+  object Panel1: TPanel
+    Left = 0
+    Height = 600
+    Top = 0
+    Width = 150
+    Align = alLeft
+    ClientHeight = 600
+    ClientWidth = 150
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 16
+      Height = 18
+      Top = 16
+      Width = 103
+      Caption = 'Выберите цвет'
+      Font.Height = -14
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 16
+      Height = 18
+      Top = 272
+      Width = 131
+      Caption = 'Выберите толщину'
+      Font.Height = -14
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Edit1: TEdit
+      Left = 16
+      Height = 35
+      Top = 304
+      Width = 50
+      Alignment = taCenter
+      TabOrder = 0
+      Text = '1'
+      OnChange = Edit1Change
+    end
+    object UpDown1: TUpDown
+      Left = 70
+      Height = 35
+      Top = 304
+      Width = 30
+      Associate = Edit1
+      Max = 20
+      Min = 1
+      Position = 1
+      TabOrder = 1
+      OnChanging = UpDown1Changing
+      OnClick = UpDown1Click
+    end
+    object ColorBox1: TColorBox
+      Left = 16
+      Height = 30
+      Top = 48
+      Width = 120
+      Style = [cbStandardColors, cbExtendedColors]
+      ItemHeight = 0
+      TabOrder = 2
+      OnChange = ColorBox1Change
+      OnClick = ColorBox1Change
+    end
+  end
+  object Image1: TImage
+    Left = 150
+    Height = 600
+    Top = 0
+    Width = 650
+    Align = alClient
+    OnMouseDown = Image1MouseDown
+    OnMouseMove = Image1MouseMove
+    OnMouseUp = Image1MouseUp
+  end
+  object MainMenu1: TMainMenu
+    Left = 544
+    Top = 48
+    object MenuItem1: TMenuItem
+      Caption = 'Файл'
+      object MenuItemOpen: TMenuItem
+        Caption = 'Открыть рисунок'
+        ShortCut = 16463
+        OnClick = MenuItemOpenClick
+      end
+      object MenuItemSave: TMenuItem
+        Caption = 'Сохранить рисунок'
+        ShortCut = 16467
+        OnClick = MenuItemSaveClick
+      end
+      object MenuItemExit: TMenuItem
+        Caption = 'Выход'
+        ShortCut = 16472
+        OnClick = MenuItemExitClick
+      end
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Правка'
+      object MenuItemClear: TMenuItem
+        Caption = 'Очистить рисунок'
+        ShortCut = 16462
+        OnClick = MenuItemClearClick
+      end
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Справка'
+      object MenuItemHelp: TMenuItem
+        Caption = 'Справка'
+        ShortCut = 112
+        OnClick = MenuItemHelpClick
+      end
+      object MenuItemAbout: TMenuItem
+        Caption = 'Об авторе'
+        OnClick = MenuItemAboutClick
+      end
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Изображения (.bmp;.jpg;*.png)|.bmp;.jpg;.jpeg;.png|Все файлы (.)|.'
+    Left = 584
+    Top = 120
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = '.bmp'
+    Filter = 'BMP изображения (*.bmp)|*.bmp|PNG изображения (*.png)|*.png'
+    Left = 656
+    Top = 40
+  end
+end
