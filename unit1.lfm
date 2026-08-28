@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 2041
+  Left = 2625
   Height = 600
-  Top = 268
+  Top = 142
   Width = 800
   Caption = 'Графический редактор'
   ClientHeight = 600
@@ -50,7 +50,7 @@ object Form1: TForm1
       OnChange = Edit1Change
     end
     object UpDown1: TUpDown
-      Left = 70
+      Left = 66
       Height = 35
       Top = 304
       Width = 30
@@ -72,6 +72,15 @@ object Form1: TForm1
       TabOrder = 2
       OnChange = ColorBox1Change
       OnClick = ColorBox1Change
+    end
+    object btnEraser: TButton
+      Left = 16
+      Height = 30
+      Top = 144
+      Width = 120
+      Caption = 'Ластик'
+      TabOrder = 3
+      OnClick = btnEraserClick
     end
   end
   object Image1: TImage

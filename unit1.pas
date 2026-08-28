@@ -6,13 +6,14 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  ComCtrls, Menus, ColorBox,LCLIntf;
+  ComCtrls, Menus, ColorBox, LCLIntf;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
+    btnEraser: TButton;
     ColorBox1: TColorBox;
     Edit1: TEdit;
     Image1: TImage;
@@ -33,6 +34,8 @@ type
     Panel1: TPanel;
     SaveDialog1: TSaveDialog;
     UpDown1: TUpDown;
+
+    procedure btnEraserClick(Sender: TObject);
     procedure ColorBox1Change(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -51,6 +54,7 @@ type
     procedure UpDown1Click(Sender: TObject; Button: TUDBtnType);
   private
     Drawing: Boolean;
+    FEraseMode: Boolean;
   public
 
   end;
@@ -67,6 +71,7 @@ implementation
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Drawing := False;
+  FEraseMode := False;
 
   Image1.Canvas.Brush.Color := clWhite;
   Image1.Canvas.Brush.Style := bsSolid;
@@ -92,10 +97,22 @@ begin
   SaveDialog1.DefaultExt := 'bmp';
 end;
 
+{ ---------- Ластик ---------- }
+
+procedure TForm1.btnEraserClick(Sender: TObject);
+begin
+  FEraseMode := True;
+end;
+
+{ ---------- Цвет ---------- }
+
 procedure TForm1.ColorBox1Change(Sender: TObject);
 begin
+  FEraseMode := False;
   Image1.Canvas.Pen.Color := ColorBox1.Selected;
 end;
+
+{ ---------- Толщина линии ---------- }
 
 procedure TForm1.Edit1Change(Sender: TObject);
 begin
@@ -115,6 +132,8 @@ procedure TForm1.UpDown1Click(Sender: TObject; Button: TUDBtnType);
 begin
 
 end;
+
+{ ---------- Рисование ---------- }
 
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
@@ -140,6 +159,11 @@ procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Inte
 begin
   if (ssLeft in Shift) and Drawing then
   begin
+    if FEraseMode then
+      Image1.Canvas.Pen.Color := clWhite
+    else
+      Image1.Canvas.Pen.Color := ColorBox1.Selected;   // обычный цвет
+
     Image1.Canvas.LineTo(X, Y);
   end;
 end;
@@ -150,6 +174,8 @@ begin
   if Button = mbLeft then
     Drawing := False;
 end;
+
+{ ---------- Меню ---------- }
 
 procedure TForm1.MenuItemClearClick(Sender: TObject);
 begin
@@ -231,14 +257,15 @@ begin
               '• Левая кнопка мыши - рисование' + #13#10 +
               '• Правая кнопка мыши - заливка' + #13#10 +
               '• Выберите цвет в списке' + #13#10 +
-              '• Выберите толщину линии (1-20)');
+              '• Выберите толщину линии (1-20)' + #13#10 +
+              '• Кнопка "Ластик" - стирание белым');
 end;
 
 procedure TForm1.MenuItemAboutClick(Sender: TObject);
 begin
   if MessageDlg('Об авторе',
     'Графический редактор' + #13#10 +
-    'Версия 1.0' + #13#10 +
+    'Версия 1.1' + #13#10 +
     #13#10 +
     'Разработчик: Артём Ховрин (zaqrax1)' + #13#10 +
     'Группа: 1ИСиП-25-2с' + #13#10 +
